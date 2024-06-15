@@ -5,6 +5,7 @@ const {
   userSignUpPost,
   logOut,
   getUser,
+  updateProfile,
 } = require("../controller/userController");
 const router = express.Router();
 
@@ -19,5 +20,7 @@ router.post("/userSignUpPost", userSignUpPost);
 router.get("/userLogOut", logOut);
 
 router.get("/getUser", getUser);
+
+router.post('/updateUserProfile',updateProfile)
 
 module.exports = router;

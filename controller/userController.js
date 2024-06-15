@@ -46,28 +46,7 @@ const getUser = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-//     try {
-//         console.log('---------------kkkk');
-//         const userData = req?.cookies.loginToken;
-//         console.log(userData, 'token');
-//         const decodedToken = jwt.verify(userData, process.env.SECRET_KEY);
-//         console.log(decodedToken,'userId');
-//         const {userId} = decodedToken
-//         console.log(userId);
-//         const users = await User.findOne({_id : userId});
-//         console.log(users, "data is here");
-//         if(users){
-//             res.json(users);
-//         }else{
-//             throw new Error("user can't find")
-//         }
 
-//     } catch (err) {
-//         console.error(err);
-//         throw new Error("user can't find here")
-//         res.status(500).json({ message: err.message });
-//     }
-// };
 
 // post for user Login
 const userLoginPost = async (req, res) => {
@@ -144,6 +123,19 @@ const userSignUpPost = async (req, res) => {
   }
 };
 
+//update user Profile page 
+
+const updateProfile = async(req,res)=>{
+  try {
+    console.log('update user profile page is here',req.body );
+    const {_id,userName,email,password,confirmPassword} = req.body
+    console.log(_id,'wwwww');
+    // const updateData = await User.findOneAndUpdate({_id: _id },{$set:{userName:userName,email:email,password:password,confirmPassword:confirmPassword}})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // user LogOut post
 
 const logOut = async (req, res) => {
@@ -156,5 +148,7 @@ module.exports = {
   getUser,
   userLoginPost,
   userSignUpPost,
+  updateProfile,
   logOut,
+
 };
