@@ -130,7 +130,27 @@ const updateProfile = async(req,res)=>{
     console.log('update user profile page is here',req.body );
     const {_id,userName,email,password,confirmPassword} = req.body
     console.log(_id,'wwwww');
-    // const updateData = await User.findOneAndUpdate({_id: _id },{$set:{userName:userName,email:email,password:password,confirmPassword:confirmPassword}})
+    const updateData = await User.findOneAndUpdate({_id: _id },{$set:{userName:userName,email:email,password:password,confirmPassword:confirmPassword}})
+    console.log(updateData,'kkk');
+    res.json(updateData)
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// update profile photo 
+
+const userProfilePhoto = async(req,res)=>{
+  try {
+    console.log('profile photo');
+    const { _id } = req.body;
+    const profilePhoto = req.file.path;
+    console.log(_id);
+    const photoUpload = await User.findByIdAndUpdate({_id : _id},{$set:{profilePhoto:profilePhoto}},{new:true})
+    console.log(photoUpload);
+    console.log('finish');
+    res.json(photoUpload)
+
   } catch (error) {
     console.log(error);
   }
@@ -150,5 +170,6 @@ module.exports = {
   userSignUpPost,
   updateProfile,
   logOut,
+  userProfilePhoto
 
 };

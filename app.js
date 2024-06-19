@@ -22,6 +22,8 @@ app.use(cors(corsOptions));
 // Middleware to parse JSON requests
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Import routers
 const userRouter = require("./router/userRouter");

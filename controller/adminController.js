@@ -14,25 +14,26 @@ const AdminDashboard = async (req, res) => {
 
 const userStatus = async (req, res) => {
   try {
+    console.log('llll');
+    const { userId, value } = req.body;
     console.log(req.body);
-    const { selectedValue } = req.body;
-    console.log(selectedValue, "kkkkkk");
-    const userData = await User.findOne({ _id: selectedValue });
-    let status;
-    if (userData.status == true) {
-      status = await User.updateOne(
-        { _id: selectedValue },
-        { $set: { status: false } }
-      );
-    } else {
-      status = await User.updateOne(
-        { _id: selectedValue },
-        { $set: { status: true } }
-      );
+    console.log(userId, value,'ooo');
+    const userData = await User.findOne({ _id:userId });
+
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
     }
-    res.json(status);
-  } catch (error) {}
+
+    const newStatus = userData.status ? false : true;
+    const status = await User.updateOne({ _id:userId }, { $set: { status: newStatus } });
+
+    res.json({ message: "Status updated", status });
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
+
 
 const editUserData = async (req, res) => {
   try {
@@ -59,6 +60,7 @@ const createUser = async (req, res) => {
       email: email,
       password: password,
     });
+    res.json(newCreateUser)
   } catch (error) {
     console.log(error);
   }
